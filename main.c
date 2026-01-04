@@ -2,7 +2,7 @@
 #include "tigr.h"
 #include "input.h"
 
-#define RENDER_SCALE 0.25f
+#define RENDER_SCALE 0.08f
 
 static Camera cam = {
     .pos = {0, 0, -5},
@@ -10,6 +10,9 @@ static Camera cam = {
     .up = {0, 1, 0},
     .fov = 60.0f * PI / 180.0f
 };
+static Int32 frameCount = 0;
+static Float32 timeAccumulator = 0.0f;
+static Float32 fps = 60.0f;
 
 Int32 main(Int32 argc, CharSeq argv[])
 {
@@ -30,11 +33,15 @@ Int32 main(Int32 argc, CharSeq argv[])
         .color = {0.75, 0.75, 0.75}
     };
     sceneAddLight(scene, light);
-    float lastTime = tigrTime();
-    while (!tigrClosed(screen))
+    Float32 lastTime = tigrTime();
+    while(!tigrClosed(screen))
     {
-        float currentTime = tigrTime();
-        float deltaTime = currentTime - lastTime;
+        Float32 currentTime = tigrTime();
+        Float32 deltaTime = currentTime - lastTime;
+        if(deltaTime < 0.0f || deltaTime > 0.1f)
+        {
+            deltaTime = 1.0f / 60.0f;
+        }
         lastTime = currentTime;
         handleInput(scene, screen, deltaTime);
         sceneRender(scene, renderBuffer);
@@ -47,6 +54,15 @@ Int32 main(Int32 argc, CharSeq argv[])
                 screen->pix[y * screen->w + x] = renderBuffer->pix[srcY * renderBuffer->w + srcX];
             }
         }
+        timeAccumulator += deltaTime;
+        frameCount++;
+        if(timeAccumulator >= 1.0f)
+        {
+            fps = (Float32)frameCount / timeAccumulator;
+            frameCount = 0;
+            timeAccumulator = 0.0f;
+        }
+        tigrPrint(screen, tfont, 10, 10, tigrRGB(0xff, 0, 0), "FPS: %.1f", fps);
         tigrUpdate(screen);
     }
     destroyScene(scene);

@@ -1,4 +1,5 @@
 #include "scene.h"
+#include "frustum.h"
 #include <stdlib.h>
 
 Scene* createScene(Camera camera, Vec3 backgroundColor)
@@ -51,11 +52,14 @@ Void sceneAddLight(Scene* scene, Light light)
 
 Void sceneRender(Scene* scene, Tigr* buffer)
 {
+    Float32 aspect = (Float32) buffer->w / buffer->h;
+    Frustum frustum;
+    frustumExtract(&frustum, &scene->camera, 0.1f, 100.0f, aspect);
     for(Int32 y = 0; y < buffer->h; ++y)
     {
         for(Int32 x = 0; x < buffer->w; ++x)
         {
-            Float32 u = (2.0f * (x + 0.5f) / buffer->w - 1.0f) * tanf(scene->camera.fov / 2.0f) * (buffer->w / (Float32)buffer->h);
+            Float32 u = (2.0f * (x + 0.5f) / buffer->w - 1.0f) * tanf(scene->camera.fov / 2.0f) * aspect;
             Float32 v = (1.0f - 2.0f * (y + 0.5f) / buffer->h) * tanf(scene->camera.fov / 2.0f);
             Vec3 right = vec3Norm(
                 vec3Cross(scene->camera.dir, scene->camera.up)
@@ -73,6 +77,10 @@ Void sceneRender(Scene* scene, Tigr* buffer)
             Sphere* hitSphere = null;
             for(Int32 i = 0; i < scene->sphereCount; ++i)
             {
+                // if(!frustumSphereIntersect(&frustum, scene->spheres[i].center, scene->spheres[i].radius))
+                // { // cull it!
+                //     continue;
+                // }
                 Float32 t;
                 if(intersectSphere(scene->camera.pos, rayDir, scene->spheres[i], &t) && t < closestT)
                 {
