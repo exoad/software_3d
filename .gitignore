@@ -1,0 +1,9 @@
+*.exe
+obj/
+private/
+*.dll
+*.log
+*.tmp
+*.out
+*.o
+*.bmp
