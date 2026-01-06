@@ -18,7 +18,7 @@ OBJ_FILES = $(patsubst %.c,$(OBJDIR)/%.o,$(notdir $(C_FILES)))
 OPT = -O3
 DEF_FILES =
 
-CFLAGS = -std=c17 -D_GNU_SOURCE -Wall -Wextra -Wpedantic -Wunused -Wcast-align -Wno-unused-function -fno-stack-protector -ffast-math -march=native -Wshadow $(OPT) $(ASAN_FLAGS) $(DEFINES) -I$(INCDIR) -I$(ASSETDIR)
+CFLAGS = -std=c17 -D_GNU_SOURCE -Wall -Wextra -Wpedantic -Wunused -Wcast-align -Wno-unused-function -fno-stack-protector -ffast-math -march=native -Wshadow -fopenmp $(OPT) $(ASAN_FLAGS) $(DEFINES) -I$(INCDIR) -I$(ASSETDIR)
 
 UNAME_S := $(shell uname -s)
 ifeq ($(UNAME_S),Linux)
@@ -27,7 +27,7 @@ ifeq ($(UNAME_S),Linux)
 	BIN = game.o
 else
     PLATFORM_LDFLAGS =
-    PLATFORM_LDFLAGS += -lopengl32 -lgdi32
+    PLATFORM_LDFLAGS += -lopengl32 -lgdi32 -fopenmp
 endif
 
 LDFLAGS = $(ASAN_FLAGS) $(PLATFORM_LDFLAGS)

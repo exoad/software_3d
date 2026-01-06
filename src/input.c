@@ -28,11 +28,11 @@ Void handleInput(Scene* scene, Tigr* screen, Float32 deltaTime) {
     // invert controls mwahahaha
     if(tigrKeyHeld(screen, TK_RIGHT))
     {
-        scene->camera.dir = vec3RotateY(scene->camera.dir, rotSpeed);
+        // scene->camera.dir = vec3RotateX(scene->camera.dir, rotSpeed);
     }
     if(tigrKeyHeld(screen, TK_LEFT))
     {
-        scene->camera.dir = vec3RotateY(scene->camera.dir, -rotSpeed);
+        // scene->camera.dir = vec3RotateX(scene->camera.dir, -rotSpeed);
     }
     if(tigrKeyHeld(screen, TK_DOWN))
     {
