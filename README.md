@@ -59,6 +59,10 @@ To run the application:
 ./main
 ```
 
+### Dependencies
+
+`libc` only. The [Tigr](https://github.com/erkkah/tigr/blob/master/tigr.h) library is already bundled inside :D
+
 ## API DOCS
 
 ### SCENE MANAGEMENT
