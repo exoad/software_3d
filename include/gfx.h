@@ -13,7 +13,9 @@
 #define COLOR_CYAN    {0, 1, 1}
 
 typedef struct {
-    UInt8 r, g, b;
+    UInt8 r;
+    UInt8 g;
+    UInt8 b;
 } Color;
 
 typedef struct {

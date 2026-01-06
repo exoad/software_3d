@@ -1,9 +1,18 @@
 #ifndef INPUT_H
 #define INPUT_H
 
-#include "scene.h"
+#include "camera.h"
 #include "tigr.h"
+#include "rendercontext.h"
 
-Void handleInput(Scene* scene, Tigr* screen, Float32 deltaTime);
+typedef struct {
+    Int32 lastMouseX;
+    Int32 lastMouseY;
+    Bool mouseCaptured;
+} InputState;
+
+Void initInputState(InputState* state);
+Void handleInput(CameraController* cam, Tigr* screen, Float32 deltaTime, InputState* inputState);
+Void inputUpdate(RenderContext* ctx, Tigr* screen, Float32 deltaTime, InputState* state);
 
 #endif

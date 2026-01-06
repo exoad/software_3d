@@ -6,14 +6,14 @@ GfxBuffer* newGfxBuffer(Int32 width, Int32 height) {
     {
         return null;
     }
-    GfxBuffer* buffer = (GfxBuffer*) malloc(sizeof(GfxBuffer));
+    GfxBuffer* buffer = (GfxBuffer*) malloc(sizeOf(GfxBuffer));
     if(!buffer)
     {
         return null;
     }
     buffer->width = width;
     buffer->height = height;
-    buffer->pixels = (Color*) malloc(sizeof(Color) * width * height);
+    buffer->pixels = (Color*) malloc(sizeOf(Color) * width * height);
     if(!buffer->pixels)
     {
         free(buffer);

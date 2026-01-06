@@ -2,15 +2,15 @@
 #include <stdlib.h>
 
 Bool bmpWrite(const CharSeq filename, const GfxBuffer* buffer) {
-    if(!buffer || !buffer->pixels || buffer->width <= 0 || buffer->height <= 0) {
+    if(!buffer || !buffer->pixels || buffer->width <= 0 || buffer->height <= 0)
+    {
         return false;
     }
-
     CFile* file = fopen(filename, "wb");
-    if(!file) {
+    if(!file)
+    {
         return false;
     }
-
     Int32 width = buffer->width;
     Int32 height = buffer->height;
     Int32 row_size = width * 3;

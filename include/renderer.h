@@ -21,9 +21,20 @@ typedef struct {
     Float32 fov;
 } Camera;
 
+typedef enum {
+    LIGHT_POINT,
+    LIGHT_SPOT,
+    LIGHT_AREA
+} LightType;
+
 typedef struct {
+    LightType type;
     Vec3 pos;
     Vec3 color;
+    Vec3 dir;
+    Float32 innerCutoff;
+    Float32 outerCutoff;
+    Float32 radius; // for area lights
 } Light;
 
 Bool intersectSphere(Vec3 origin, Vec3 dir, Sphere sphere, Float32* t);

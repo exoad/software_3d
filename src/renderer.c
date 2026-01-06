@@ -1,5 +1,6 @@
 #include "renderer.h"
 #include <math.h>
+#include "logger.h"
 
 Bool intersectSphere(Vec3 origin, Vec3 dir, Sphere sphere, Float32* t)
 {
@@ -53,22 +54,23 @@ Vec3 phongShade(Vec3 hit, Vec3 normal, Vec3 viewDir, Vec3 lightPos, Vec3 lightCo
 
 Void renderScene(GfxBuffer* buffer, Camera cam, Sphere sphere, Light light, Vec3 objColor, Float32 shininess)
 {
+    LOG_D("Rendering frame...");
+    Vec3 right = vec3Norm(vec3Cross(cam.dir, cam.up));
+    Vec3 up = vec3Norm(vec3Cross(right, cam.dir));
+
     for(Int32 y = 0; y < buffer->height; ++y)
     {
         for(Int32 x = 0; x < buffer->width; ++x)
         {
             Float32 u = (2.0f * (x + 0.5f) / buffer->width - 1.0f) * tanf(cam.fov / 2.0f) * (buffer->width / (Float32)buffer->height);
             Float32 v = (1.0f - 2.0f * (y + 0.5f) / buffer->height) * tanf(cam.fov / 2.0f);
-            Vec3 right = vec3Norm(
-                vec3Cross(cam.dir, cam.up)
-            ); // Right vector
             Vec3 rayDir = vec3Norm(
                 vec3Add(
                     vec3Add(
-                        vec3Mul(cam.dir, 1),
+                        cam.dir,
                         vec3Mul(right, u)
                     ),
-                    vec3Mul(cam.up, v)
+                    vec3Mul(up, v)
                 )
             );
             Float32 t;

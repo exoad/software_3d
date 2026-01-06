@@ -48,6 +48,13 @@ typedef Void* Any;
 #define simple static inline
 #define use(x) (Void) (x)
 #define PI 3.14159265358979323846f
+#define sizeOf sizeof
+
+simple Float32 clamp(Float32 x, Float32 minVal, Float32 maxVal)
+{
+    return fminf(fmaxf(x, minVal), maxVal);
+}
+
 
 typedef struct {
     Float32 x, y, z;
@@ -75,6 +82,7 @@ simple Float32 vec3Dot(Vec3 a, Vec3 b)
     return a.x * b.x + a.y * b.y + a.z * b.z;
 }
 
+
 simple Float32 vec3Len(Vec3 a)
 {
     return sqrtf(vec3Dot(a, a));
@@ -82,13 +90,25 @@ simple Float32 vec3Len(Vec3 a)
 
 simple Vec3 vec3Norm(Vec3 a)
 {
-    Float32 len = vec3Len(a);
-    return len > 0 ? vec3Mul(a, 1.0f / len) : (Vec3){0, 0, 0};
+    Float32 l = vec3Len(a);
+    if(l < 1e-12f) return VEC3_ZERO;
+    return vec3Mul(a, 1.0f / l);
 }
 
 simple Vec3 vec3Reflect(Vec3 v, Vec3 n)
 {
     return vec3Sub(v, vec3Mul(n, 2 * vec3Dot(v, n)));
+}
+
+simple Vec3 vec3Refract(Vec3 v, Vec3 n, Float32 eta)
+{
+    Float32 dot = vec3Dot(v, n);
+    Float32 k = 1.0f - eta * eta * (1.0f - dot * dot);
+    if(k < 0.0f)
+    {
+        return VEC3_ZERO;
+    }
+    return vec3Add(vec3Mul(v, eta), vec3Mul(n, -(eta * dot + sqrtf(k))));
 }
 
 simple Vec3 vec3Cross(Vec3 a, Vec3 b)
