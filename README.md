@@ -1,6 +1,8 @@
-# SOFTWARE RAYTRACER v1.0
+# Make the CPU Great Again!
 
-This is a high-performance software raytracing engine written in pure ANSI C. It supports accelerated meshes, procedural textures, and physically based refraction.
+A high performance CPU based 3D rendering software that tries to simulate a lot of the math and computation that is normally done on specialized hardware (Big GPU - AKA Big Green / Nvidia) directly on the CPU. Its not the fastest, but it is cool :)
+
+There are some lightweight implementation of shader passes allowing for you to directly write C code that behaves like shaders you would typically write. (See `shaderpass.h`) There is also support for simple OBJ file loading along with raytracing (SDF Raymarching) and also basic complex geometry with a light weight frustrum culler (doesnt work well)
 
 ## SHADER PASSES (demo scenes)
 
