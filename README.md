@@ -32,14 +32,15 @@ Effects such as Edge Detection and Cel Shading are implemented as screen-space p
 Edges are smoothed using Super-Sampled Anti-Aliasing (SSAA). The engine renders at a higher internal resolution and then averages the samples down for the final output. This provides high-quality results at a higher performance cost.
 
 ## CONTROLS
-
-WASD        : Lateral movement
-QE          : Vertical movement
-ARROWS      : Rotation
-SPACE       : Toggle mouse capture
-TAB         : Switch render passes
-X           : Capture screenshot
-SHIFT       : Sprint
+```
+[W,A,S,D]        : Lateral movement
+[Q,E]            : Vertical movement
+[ARROWS]         : Rotation
+[SPACE]       : Toggle mouse camera movement
+[TAB]         : Switch render passes
+[X]           : Capture screenshot
+[SHIFT]       : Sprint
+```
 
 ## BUILDING AND RUNNING
 
@@ -49,7 +50,7 @@ To build the project:
 
 ```bash
 make clean
-make
+make -re
 ```
 
 To run the application:
